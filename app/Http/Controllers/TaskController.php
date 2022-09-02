@@ -47,10 +47,14 @@ class TaskController extends Controller
 
     private function secondSolution($input)
     {
-        if (!is_array($input)) {
-            return 'Invalid Data. Please input an array';
+        try {
+            if (!is_array($input)) {
+                return 'Invalid Data. Please input an array';
+            }
+            usort($input, array($this, 'customSort'));
+        } catch (\Throwable $th) {
+            return 'Something went wrong';
         }
-        usort($input, array($this, 'customSort'));
         return $input;
     }
 
@@ -64,23 +68,27 @@ class TaskController extends Controller
 
     private function thirdSolution($ip)
     {
-        $check = 1;
-        for ($i = 0; $i < strlen($ip); $i++) {
-            if (!(($ip[$i] >= 0 && $ip[$i] <= 9) || $ip[$i] == '.')) {
+        try {
+            $check = 1;
+            for ($i = 0; $i < strlen($ip); $i++) {
+                if (!(($ip[$i] >= 0 && $ip[$i] <= 9) || $ip[$i] == '.')) {
+                    $check = 0;
+                }
+            }
+            if (strlen($ip) > 15 || strlen($ip) < 7) {
                 $check = 0;
             }
-        }
-        if (strlen($ip) > 15 || strlen($ip) < 7) {
-            $check = 0;
-        }
-        $ipArray = explode(".", $ip);
-        if (count($ipArray) !== 4) {
-            $check = 0;
-        }
-        foreach ($ipArray as  $value) {
-            if ($value < 0 || $value > 255) {
+            $ipArray = explode(".", $ip);
+            if (count($ipArray) !== 4) {
                 $check = 0;
             }
+            foreach ($ipArray as  $value) {
+                if ($value < 0 || $value > 255) {
+                    $check = 0;
+                }
+            }
+        } catch (\Throwable $th) {
+            return 'Something went wrong';
         }
 
         return $check ? "TRUE" : "FALSE";
