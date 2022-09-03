@@ -11,7 +11,7 @@ class TaskController extends Controller
         if ($question == 1) {
             return $this->firstSolution("http://103.219.147.17/api/json.php");
         } elseif ($question == 2) {
-            return $this->secondSolution(array('0' => 'z1', '1' => 'Z10', '2' => 'z12', '3' => 'Z2', '4' => 'z3'));
+            dd($this->secondSolution(array('0' => 'z1', '1' => 'Z10', '2' => 'z12', '3' => 'Z2', '4' => 'z3')));
         } elseif ($question == 3) {
             return $this->thirdSolution("192.168.0.1");
         } else {
