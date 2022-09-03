@@ -51,7 +51,7 @@ class TaskController extends Controller
             if (!is_array($input)) {
                 return 'Invalid Data. Please input an array';
             }
-            usort($input, array($this, 'customSort'));
+            uasort($input, array($this, 'customSort'));
         } catch (\Throwable $th) {
             return 'Something went wrong';
         }
